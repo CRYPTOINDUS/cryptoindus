@@ -536,6 +536,9 @@ name = "cirml-market"
 version = "0.1.0"
 dependencies = [
  "ci-primitives",
+ "cirml-artists",
+ "cirml-artvenuses",
+ "cirml-balances",
  "frame-support",
  "frame-system",
  "parity-scale-codec",

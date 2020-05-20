@@ -14,6 +14,9 @@ frame-support = { git = "https://github.com/paritytech/substrate.git", branch="m
 frame-system = { git = "https://github.com/paritytech/substrate.git", branch="master", default-features = false }
 
 ci-primitives = { path = "../../primitives", default-features = false }
+cirml-artists = { path = "../artists", default-features = false }
+cirml-artvenuses = { path = "../artvenuses", default-features = false }
+cirml-balances = { path = "../balances", default-features = false }
 
 [features]
 default = ["std"]
@@ -27,4 +30,7 @@ std = [
 	"frame-system/std",
 
 	"ci-primitives/std",
+	"cirml-artists/std",
+    "cirml-artvenuses/std",
+    "cirml-balances/std",
 ]
