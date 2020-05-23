@@ -446,7 +446,7 @@ impl_runtime_apis! {
         AccountId,
     > for Runtime {
         fn artists() -> Vec<(ArtistId, AccountId)> {
-            unimplemented!()
+            Artists::artists()
         }
     }
 }
