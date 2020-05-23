@@ -26,6 +26,10 @@ use sp_std::prelude::*;
 use sp_version::NativeVersion;
 use sp_version::RuntimeVersion;
 
+use pallet_transaction_payment_rpc_runtime_api::RuntimeDispatchInfo;
+
+use ci_primitives::ArtistId;
+
 // A few exports that help ease life for downstream crates.
 pub use cirml_balances::Call as BalancesCall;
 pub use frame_support::{
@@ -38,7 +42,6 @@ pub use frame_support::{
     StorageValue,
 };
 pub use pallet_timestamp::Call as TimestampCall;
-use pallet_transaction_payment_rpc_runtime_api::RuntimeDispatchInfo;
 #[cfg(any(feature = "std", test))]
 pub use sp_runtime::BuildStorage;
 pub use sp_runtime::{Perbill, Permill};
@@ -434,6 +437,16 @@ impl_runtime_apis! {
     > for Runtime {
         fn query_info(uxt: UncheckedExtrinsic, len: u32) -> RuntimeDispatchInfo<Balance> {
               TransactionPayment::query_info(uxt, len)
+        }
+    }
+
+    // cirml
+    impl cirml_artists_runtime_api::ArtistsApi<
+        Block,
+        AccountId,
+    > for Runtime {
+        fn artists() -> Vec<(ArtistId, AccountId)> {
+            unimplemented!()
         }
     }
 }

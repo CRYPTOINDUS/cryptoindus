@@ -17,6 +17,8 @@ use sp_transaction_pool::TransactionPool;
 
 use cryptoindus_runtime::{opaque::Block, AccountId, Balance, Index, UncheckedExtrinsic};
 
+use cirml_artists_rpc::{Artists, ArtistsApi};
+
 use apis::CiApi;
 use impls::CiRpc;
 
@@ -62,6 +64,8 @@ where
             Balance,
             UncheckedExtrinsic,
         >,
+    <Client<BE, E, Block, RA> as ProvideRuntimeApi<Block>>::Api:
+        cirml_artists_runtime_api::ArtistsApi<Block, AccountId>,
     <<Client<BE, E, Block, RA> as ProvideRuntimeApi<Block>>::Api as sp_api::ApiErrorExt>::Error:
         fmt::Debug,
     P: TransactionPool + 'static,
@@ -80,6 +84,9 @@ where
     io.extend_with(TransactionPaymentApi::to_delegate(TransactionPayment::new(
         client.clone(),
     )));
+    // cirml
+    io.extend_with(ArtistsApi::to_delegate(Artists::new(client.clone())));
+
     io.extend_with(CiApi::to_delegate(CiRpc::new(client)));
 
     io
