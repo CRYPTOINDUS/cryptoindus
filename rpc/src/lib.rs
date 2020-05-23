@@ -18,11 +18,12 @@ use sp_blockchain::{Error as BlockChainError, HeaderBackend, HeaderMetadata};
 use sp_transaction_pool::TransactionPool;
 
 use cryptoindus_runtime::{
-    opaque::Block, AccountId, ArtvenusId, Balance, Index, UncheckedExtrinsic,
+    opaque::Block, AccountId, ArtvenusId, Balance, BlockNumber, Index, UncheckedExtrinsic,
 };
 
 use cirml_artists_rpc::{Artists, ArtistsApi};
 use cirml_artvenuses_rpc::{Artvenuses, ArtvenusesApi};
+use cirml_market_rpc::{Market, MarketApi};
 
 use apis::CiApi;
 use impls::CiRpc;
@@ -73,6 +74,8 @@ where
         cirml_artists_runtime_api::ArtistsApi<Block, AccountId>,
     <Client<BE, E, Block, RA> as ProvideRuntimeApi<Block>>::Api:
         cirml_artvenuses_runtime_api::ArtvenusesApi<Block, AccountId, ArtvenusId>,
+    <Client<BE, E, Block, RA> as ProvideRuntimeApi<Block>>::Api:
+        cirml_market_runtime_api::MarketApi<Block, ArtvenusId, Balance, BlockNumber>,
     <<Client<BE, E, Block, RA> as ProvideRuntimeApi<Block>>::Api as sp_api::ApiErrorExt>::Error:
         fmt::Debug,
     P: TransactionPool + 'static,
@@ -94,6 +97,7 @@ where
     // cirml
     io.extend_with(ArtistsApi::to_delegate(Artists::new(client.clone())));
     io.extend_with(ArtvenusesApi::to_delegate(Artvenuses::new(client.clone())));
+    io.extend_with(MarketApi::to_delegate(Market::new(client.clone())));
 
     io.extend_with(CiApi::to_delegate(CiRpc::new(client)));
 

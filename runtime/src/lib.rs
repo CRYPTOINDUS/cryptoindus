@@ -46,6 +46,9 @@ pub use pallet_timestamp::Call as TimestampCall;
 pub use sp_runtime::BuildStorage;
 pub use sp_runtime::{Perbill, Permill};
 
+pub use cirml_market::OnSellState;
+pub type OnSellArtvenus = cirml_market::OnSellArtvenus<Balance, BlockNumber>;
+
 /// An index to a block.
 pub type BlockNumber = u32;
 
@@ -467,6 +470,17 @@ impl_runtime_apis! {
 
         fn artvenuses_of_holder(account_id: AccountId) -> Vec<(u64, ArtvenusId)> {
             Artvenuses::artvenuses_of_holder(&account_id)
+        }
+    }
+
+    impl cirml_market_runtime_api::MarketApi<
+        Block,
+        ArtvenusId,
+        Balance,
+        BlockNumber,
+    > for Runtime {
+        fn on_sell() -> Vec<(ArtvenusId, OnSellArtvenus)> {
+            Market::on_sell_list()
         }
     }
 }

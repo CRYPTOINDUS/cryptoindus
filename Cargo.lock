@@ -634,12 +634,26 @@ dependencies = [
 [[package]]
 name = "cirml-market-rpc"
 version = "0.1.0"
+dependencies = [
+ "ci-primitives",
+ "cirml-market-runtime-api",
+ "jsonrpc-core",
+ "jsonrpc-core-client",
+ "jsonrpc-derive",
+ "parity-scale-codec",
+ "serde",
+ "serde_json",
+ "sp-api",
+ "sp-blockchain",
+ "sp-runtime",
+]
 
 [[package]]
 name = "cirml-market-runtime-api"
 version = "0.1.0"
 dependencies = [
  "ci-primitives",
+ "cirml-market",
  "parity-scale-codec",
  "sp-api",
  "sp-runtime",

@@ -4,13 +4,15 @@ use codec::Codec;
 
 use sp_std::prelude::Vec;
 
-use ci_primitives::ArtistId;
+// re-export
+pub use cirml_market::OnSellArtvenus;
 
 sp_api::decl_runtime_apis! {
-    pub trait MarketApi<AccountId, ArtvenusId> where
-        AccountId: Codec,
+    pub trait MarketApi<ArtvenusId, Balance, BlockNumber> where
         ArtvenusId: Codec,
+        Balance: Codec,
+        BlockNumber: Codec,
     {
-        fn on_sell() -> Vec<ArtvenusId>;
+        fn on_sell() -> Vec<(ArtvenusId, OnSellArtvenus<Balance, BlockNumber>)>;
     }
 }
