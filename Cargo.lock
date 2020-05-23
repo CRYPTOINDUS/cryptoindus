@@ -639,6 +639,7 @@ version = "0.1.0"
 name = "cirml-market-runtime-api"
 version = "0.1.0"
 dependencies = [
+ "ci-primitives",
  "parity-scale-codec",
  "sp-api",
  "sp-runtime",

@@ -1,9 +1,16 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
+use codec::Codec;
+
+use sp_std::prelude::Vec;
+
+use ci_primitives::ArtistId;
+
+sp_api::decl_runtime_apis! {
+    pub trait MarketApi<AccountId, ArtvenusId> where
+        AccountId: Codec,
+        ArtvenusId: Codec,
+    {
+        fn on_sell() -> Vec<ArtvenusId>;
     }
 }
