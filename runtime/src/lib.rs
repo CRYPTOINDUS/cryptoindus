@@ -72,6 +72,8 @@ pub type Hash = sp_core::H256;
 /// Digest item type.
 pub type DigestItem = generic::DigestItem<Hash>;
 
+pub type ArtvenusId = sp_core::H256;
+
 /// Opaque types. These are used by the CLI to instantiate machinery that don't need to know
 /// the specifics of the runtime. They can then be made to be agnostic over specific formats
 /// of data like extrinsics, allowing for them to continue syncing the network through upgrades
@@ -222,7 +224,7 @@ impl cirml_artists::Trait for Runtime {
 }
 
 impl cirml_artvenuses::Trait for Runtime {
-    type Hash = Hash;
+    type Hash = ArtvenusId;
     type Event = Event;
 }
 
@@ -276,7 +278,7 @@ construct_runtime!(
         Sudo: pallet_sudo::{Module, Call, Config<T>, Storage, Event<T>},
 
         Artists: cirml_artists::{Module, Call, Storage, Event<T>},
-        Artvensuses: cirml_artvenuses::{Module, Call, Storage, Event<T>},
+        Artvenuses: cirml_artvenuses::{Module, Call, Storage, Event<T>},
         Balances: cirml_balances::{Module, Call, Storage, Config<T>, Event<T>},
         Market: cirml_market::{Module, Call, Storage, Config<T>, Event<T>},
     }
@@ -447,6 +449,24 @@ impl_runtime_apis! {
     > for Runtime {
         fn artists() -> Vec<(ArtistId, AccountId)> {
             Artists::artists()
+        }
+    }
+
+    impl cirml_artvenuses_runtime_api::ArtvenusesApi<
+        Block,
+        AccountId,
+        ArtvenusId,
+    > for Runtime {
+        fn artvenuses() -> Vec<ArtvenusId> {
+            Artvenuses::artvenuses()
+        }
+
+        fn artvenuses_of_artist(artist_id: ArtistId) -> Vec<(u64, ArtvenusId)> {
+            Artvenuses::artvenuses_of_artist(artist_id)
+        }
+
+        fn artvenuses_of_holder(account_id: AccountId) -> Vec<(u64, ArtvenusId)> {
+            Artvenuses::artvenuses_of_holder(&account_id)
         }
     }
 }

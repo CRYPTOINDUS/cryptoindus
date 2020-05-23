@@ -12,7 +12,6 @@ sp-std = { git = "https://github.com/paritytech/substrate.git", branch="master",
 sp-runtime = { git = "https://github.com/paritytech/substrate.git", branch="master", default-features = false }
 
 ci-primitives = { path = "../../../primitives", default-features = false }
-cirml-artists = { path = "../", default-features = false }
 
 [features]
 default = ["std"]
@@ -22,5 +21,4 @@ std = [
     "sp-runtime/std",
 
     "ci-primitives/std",
-    "cirml-artists/std",
 ]

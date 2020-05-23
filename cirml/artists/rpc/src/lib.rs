@@ -1,3 +1,4 @@
+use std::collections::BTreeMap;
 use std::sync::Arc;
 
 use codec::Codec;
@@ -28,7 +29,7 @@ impl<C, B> Artists<C, B> {
 #[rpc]
 pub trait ArtistsApi<BlockHash, AccountId> {
     #[rpc(name = "artists")]
-    fn artists(&self, at: Option<BlockHash>) -> Result<Vec<(ArtistId, AccountId)>>;
+    fn artists(&self, at: Option<BlockHash>) -> Result<BTreeMap<ArtistId, AccountId>>;
 }
 
 impl<C, Block, AccountId> ArtistsApi<<Block as BlockT>::Hash, AccountId> for Artists<C, Block>
@@ -40,10 +41,12 @@ where
     Block: BlockT,
     AccountId: Clone + std::fmt::Display + Codec,
 {
-    fn artists(&self, at: Option<<Block as BlockT>::Hash>) -> Result<Vec<(u32, AccountId)>> {
+    fn artists(&self, at: Option<<Block as BlockT>::Hash>) -> Result<BTreeMap<u32, AccountId>> {
         let api = self.client.runtime_api();
         let at = BlockId::hash(at.unwrap_or_else(|| self.client.info().best_hash));
-        api.artists(&at).map_err(runtime_error_into_rpc_err)
+        api.artists(&at)
+            .map(|list| list.into_iter().collect())
+            .map_err(runtime_error_into_rpc_err)
     }
 }
 

@@ -549,7 +549,6 @@ name = "cirml-artists-runtime-api"
 version = "0.1.0"
 dependencies = [
  "ci-primitives",
- "cirml-artists",
  "parity-scale-codec",
  "sp-api",
  "sp-runtime",
@@ -576,11 +575,24 @@ dependencies = [
 [[package]]
 name = "cirml-artvenuses-rpc"
 version = "0.1.0"
+dependencies = [
+ "ci-primitives",
+ "cirml-artvenuses-runtime-api",
+ "jsonrpc-core",
+ "jsonrpc-core-client",
+ "jsonrpc-derive",
+ "parity-scale-codec",
+ "serde",
+ "sp-api",
+ "sp-blockchain",
+ "sp-runtime",
+]
 
 [[package]]
 name = "cirml-artvenuses-runtime-api"
 version = "0.1.0"
 dependencies = [
+ "ci-primitives",
  "parity-scale-codec",
  "sp-api",
  "sp-runtime",

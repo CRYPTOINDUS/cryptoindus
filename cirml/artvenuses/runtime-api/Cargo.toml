@@ -11,10 +11,14 @@ sp-api = { git = "https://github.com/paritytech/substrate.git", branch="master",
 sp-std = { git = "https://github.com/paritytech/substrate.git", branch="master", default-features = false }
 sp-runtime = { git = "https://github.com/paritytech/substrate.git", branch="master", default-features = false }
 
+ci-primitives = { path = "../../../primitives", default-features = false }
+
 [features]
 default = ["std"]
 std = [
     "sp-api/std",
     "sp-std/std",
     "sp-runtime/std",
+
+    "ci-primitives/std",
 ]
